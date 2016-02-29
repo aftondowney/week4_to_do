@@ -14,6 +14,9 @@
     'twig.path' => __DIR__.'/../views'
     ));
 
+    use Symfony\Component\HttpFoundation\Request;
+    Request::enableHttpMethodParameterOverride();
+
     $app->get("/", function() use ($app) {
     return $app['twig']->render('index.html.twig', array('categories' => Category::getAll(), 'tasks' => Task::getAll()));
     });
@@ -28,7 +31,9 @@
 
     $app->post("/tasks", function() use ($app) {
     $description = $_POST['description'];
-    $task = new Task($description);
+    $completed = $_POST['completed'];
+    $due_date = $_POST['due_date'];
+    $task = new Task($description, $completed, $due_date);
     $task->save();
     return $app['twig']->render('tasks.html.twig', array('tasks' => Task::getAll()));
     });
