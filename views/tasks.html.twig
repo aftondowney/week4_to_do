@@ -17,6 +17,12 @@
     <form action='/tasks' method='post'>
         <label for='description'>Task description:</label>
         <input id='description' name='description' type='text'>
+        <label for='due_date'>Task due date:</label>
+        <input id='due_date' name='due_date' type='date'>
+        <select id='completed' name='completed' type='text' class="form-control">
+            <option value=false>in process</option>
+            <option value=true>completed</option>
+        </select>
 
         <button type='submit'>Add task</button>
     </form>

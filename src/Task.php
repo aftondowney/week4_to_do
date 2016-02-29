@@ -51,7 +51,7 @@
 
         function save()
         {
-              $GLOBALS['DB']->exec("INSERT INTO tasks (description, completed, due_date)  VALUES ('{$this->getDescription()}', '{$this->getCompleted()}', '{$this->getDueDate()}');");
+              $GLOBALS['DB']->exec("INSERT INTO tasks (description, completed, due_date)  VALUES ('{$this->getDescription()}', {$this->getCompleted()}, '{$this->getDueDate()}');");
               $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
