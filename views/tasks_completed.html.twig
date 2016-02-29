@@ -1,0 +1,27 @@
+<html>
+<head>
+    <title>To Do List</title>
+</head>
+<body>
+    <h1>{{ category.getName }}</h1>
+
+    {% if tasks is not empty %}
+        <p>Here are the completed tasks for this category:</p>
+        <ul>
+            {% for task in tasks %}
+                <li>
+                    {{ task.getDescription }}
+
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+
+    <p><a href="/add_tasks">View all Tasks</a></p>
+
+    <p><a href="/categories/{{ category.getId }}/edit">Edit this category</a></p>
+
+    <p><a href='/'>Home</a></p>
+</body>
+</html>

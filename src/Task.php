@@ -40,9 +40,9 @@
             return $this->id;
         }
 
-        function setDueDate()
+        function setDueDate($new_due_date)
         {
-            $this->due_date = $due_date;
+            $this->due_date = $new_due_date;
         }
         function getDueDate()
         {
@@ -126,11 +126,10 @@
 
         static function findCompleted($completed)
         {
-            $found_task = [];
+            $found_task = array();
             $tasks = Task::getAll();
             foreach($tasks as $task) {
-                $task_completed = $task->getCompleted();
-                if ($task_completed == $completed) {
+                if ($completed == true) {
                   array_push($found_task, $task);
                 }
             }

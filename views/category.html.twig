@@ -12,8 +12,8 @@
                 <li>
                     {{ task.getDescription }}
                     <select id='completed' name='completed' type='text' class="form-control">
-                        <option>in process</option>
-                        <option>completed</option>
+                        <option value=false>in process</option>
+                        <option value=true>completed</option>
                     </select>
                 </li>
             {% endfor %}
@@ -32,6 +32,8 @@
         </select>
         <button type='submit'>Add task</button>
     </form>
+
+    <p><a href="/categories/{{ category.getId }}/completed">View completed Tasks</a></p>
 
     <p><a href="/categories/{{ category.getId }}/edit">Edit this category</a></p>
 
