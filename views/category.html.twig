@@ -9,7 +9,13 @@
         <p>Here are the tasks for this category:</p>
         <ul>
             {% for task in tasks %}
-                <li>{{ task.getDescription }}</li>
+                <li>
+                    {{ task.getDescription }}
+                    <select id='completed' name='completed' type='text' class="form-control">
+                        <option>in process</option>
+                        <option>completed</option>
+                    </select>
+                </li>
             {% endfor %}
         </ul>
     {% endif %}

@@ -2,11 +2,16 @@
     class Task
     {
         private $description;
+        private $completed;
+        private $due_date;
         private $id;
 
-        function __construct($description, $id = null)
+
+        function __construct($description, $completed, $due_date, $id = null)
         {
             $this->description = $description;
+            $this->completed = $completed;
+            $this->due_date = $due_date;
             $this->id = $id;
         }
 
@@ -20,14 +25,33 @@
             return $this->description;
         }
 
+        function setCompleted($new_completed)
+        {
+            $this->completed = (boolean) $new_completed;
+        }
+
+        function getCompleted()
+        {
+            return $this->completed;
+        }
+
         function getId()
         {
             return $this->id;
         }
 
+        function setDueDate()
+        {
+            $this->due_date = $due_date;
+        }
+        function getDueDate()
+        {
+            return $this->due_date;
+        }
+
         function save()
         {
-              $GLOBALS['DB']->exec("INSERT INTO tasks (description) VALUES ('{$this->getDescription()}');");
+              $GLOBALS['DB']->exec("INSERT INTO tasks (description, completed, due_date)  VALUES ('{$this->getDescription()}', '{$this->getCompleted()}', '{$this->getDueDate()}');");
               $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
@@ -37,8 +61,10 @@
             $tasks = array();
             foreach($returned_tasks as $task) {
                 $description = $task['description'];
+                $completed = $task['completed'];
+                $due_date = $task['due_date'];
                 $id = $task['id'];
-                $new_task = new Task($description, $id);
+                $new_task = new Task($description, $completed, $due_date, $id);
                 array_push($tasks, $new_task);
             }
             return $tasks;
@@ -61,6 +87,7 @@
             }
             return $found_task;
         }
+
         function update($new_description)
         {
             $GLOBALS['DB']->exec("UPDATE tasks SET description = '{$new_description}' WHERE id = {$this->getId()};");
@@ -95,6 +122,19 @@
                 array_push($categories, $new_category);
             }
             return $categories;
+        }
+
+        static function findCompleted($completed)
+        {
+            $found_task = [];
+            $tasks = Task::getAll();
+            foreach($tasks as $task) {
+                $task_completed = $task->getCompleted();
+                if ($task_completed == $completed) {
+                  array_push($found_task, $task);
+                }
+            }
+            return $found_task;
         }
     }
 ?>

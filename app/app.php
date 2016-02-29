@@ -49,6 +49,21 @@
         return $app['twig']->render('category.html.twig', array('category' => $category, 'tasks' => $category->getTasks(), 'all_tasks' => Task::getAll()));
     });
 
+    $app->post("/add_tasks", function() use ($app) {
+    $category = Category::find($_POST['category_id']);
+    $task = Task::find($_POST['task_id']);
+    $category->addTask($task);
+    return $app['twig']->render('category.html.twig', array('category' => $category, 'categories' => Category::getAll(), 'tasks' => $category->getTasks(), 'all_tasks' => Task::getAll()));
+    });
+
+    $app->post("/add_categories", function() use ($app) {
+        $category = Category::find($_POST['category_id']);
+        $task = Task::find($_POST['task_id']);
+        $task->addCategory($category);
+        return $app['twig']->render('task.html.twig', array('task' => $task, 'tasks' => Task::getAll(), 'categories' => $task->getCategories(), 'all_categories' => Category::getAll()));
+    });
+
+
 
     return $app;
 
