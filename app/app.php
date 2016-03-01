@@ -71,9 +71,8 @@ $app['debug'] = true;
     });
 
     $app->get("/categories/{{ category.getId }}/completed", function($completed) use ($app) {
-        $task = new Task($_POST['description'], $_POST['completed'], $_POST['due_date']);
-        $task->save();
-        return $app['twig']->render('tasks_completed.html.twig', array('tasks' => Task::findCompleted($completed)));
+        $category = Category::find($id);
+        return $app['twig']->render('category_complete.html.twig', array('category' => $category, 'tasks' => $category->getCompletedTasks(), 'all_tasks' => Task::getAll()));
     });
 
     $app->post("/delete_tasks", function() use ($app) {
@@ -85,6 +84,21 @@ $app['debug'] = true;
        Category::deleteAll();
        return $app['twig']->render('index.html.twig');
    });
+
+   $app->get("/task/{cid}/{tid}/edit_form", function($cid, $tid) use ($app)
+	{
+		$current_task = Task::find($rid);
+		$cuisine = Category::find($cid);
+		return $app['twig']->render('category.html.twig', array('current_task' => $current_task, 'category' => $category, 'tasks' => $category->getTasks(), 'form' => true));
+	});
+
+	$app->patch("/tasks/updated", function() use ($app)
+	{
+		$task_to_edit = Task::find($_POST['current_taskId']);
+		$task_to_edit->update($_POST['description'], $_POST['completed'], $_POST{'due_date'});
+		$category = Category::find($_POST['category_id']);
+		return $app['twig']->render('category.html.twig', array('tasks' => $category->getTasks(), 'category' => $category));
+    });
 
 
 

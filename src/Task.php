@@ -88,10 +88,12 @@
             return $found_task;
         }
 
-        function update($new_description)
+        function update($new_description, $new_completed, $new_due_date)
         {
-            $GLOBALS['DB']->exec("UPDATE tasks SET description = '{$new_description}' WHERE id = {$this->getId()};");
+            $GLOBALS['DB']->exec("UPDATE tasks SET description = '{$new_description}', completed = {$new_completed}, '{$new_due_date}' WHERE id = {$this->getId()};");
             $this->setDescription($new_description);
+            $this->setCompleted($new_completed);
+            $this->setDueDate($new_due_date);
         }
 
         function delete()
@@ -124,16 +126,6 @@
             return $categories;
         }
 
-        static function findCompleted($completed)
-        {
-            $found_task = array();
-            $tasks = Task::getAll();
-            foreach($tasks as $task) {
-                if ($completed == true) {
-                  array_push($found_task, $task);
-                }
-            }
-            return $found_task;
-        }
+
     }
 ?>

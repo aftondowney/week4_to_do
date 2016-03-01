@@ -4,6 +4,18 @@
 </head>
 <body>
     <h1>{{ task.getDescription }}</h1>
+    <h2>{{ task.getDueDate }}<h2>
+        <h2>
+            {% if task.getCompleted == 0 %}
+                in process
+            {% endif %}
+        </h2>
+        <h2>
+            {% if task.getCompleted == 1 %}
+                completed
+            {% endif %}
+        </h2>
+        <p><a href='/'>Edit Task</a></p>
 
     {% if categories is not empty %}
         <p>Here are the categories for this task:</p>

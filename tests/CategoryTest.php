@@ -166,9 +166,11 @@
             $test_category = new Category($name, $id);
             $test_category->save();
 
-            $description = "File reports";
+            $description = "Wash the dog";
             $id2 = 2;
-            $test_task = new Task($description, $id2);
+            $due_date = "2016-03-01";
+            $completed = 1;
+            $test_task = new Task($description, $completed, $due_date, $id2);
             $test_task->save();
 
             //Act
@@ -207,9 +209,11 @@
             $test_category = new Category($name, $id);
             $test_category->save();
 
-            $description = "File reports";
+            $description = "Wash the dog";
             $id2 = 2;
-            $test_task = new Task($description, $id2);
+            $due_date = "2016-03-01";
+            $completed = 1;
+            $test_task = new Task($description, $completed, $due_date, $id2);
             $test_task->save();
 
             //Act
@@ -229,12 +233,16 @@
 
             $description = "Wash the dog";
             $id2 = 2;
-            $test_task = new Task($description, $id2);
+            $due_date = "2016-03-01";
+            $completed = 1;
+            $test_task = new Task($description, $completed, $due_date, $id2);
             $test_task->save();
 
             $description2 = "Take out the trash";
             $id3 = 3;
-            $test_task2 = new Task($description2, $id3);
+            $due_date2 = "2016-03-01";
+            $completed2 = 0;
+            $test_task2 = new Task($description2, $completed2, $due_date2, $id3);
             $test_task2->save();
 
             //Act
@@ -243,6 +251,37 @@
 
             //Assert
             $this->assertEquals($test_category->getTasks(), [$test_task, $test_task2]);
+        }
+
+        function testGetCompletedTasks()
+        {
+            //Arrange
+            $name = "Home stuff";
+            $id = 1;
+            $test_category = new Category($name, $id);
+            $test_category->save();
+
+            $description = "Wash the dog";
+            $id2 = 2;
+            $due_date = "2016-03-01";
+            $completed = 1;
+            $test_task = new Task($description, $completed, $due_date, $id2);
+            $test_task->save();
+
+            $description2 = "Take out the trash";
+            $id3 = 3;
+            $due_date2 = "2016-03-01";
+            $completed2 = 0;
+            $test_task2 = new Task($description2, $completed2, $due_date2, $id3);
+            $test_task2->save();
+
+            //Act
+            $test_category->addTask($test_task);
+            $test_category->addTask($test_task2);
+            // var_dump($test_category->getCompletedTasks());
+
+            //Assert
+            $this->assertEquals([$test_task], $test_category->getCompletedTasks());
         }
     }
 

@@ -99,5 +99,32 @@
             }
             return $tasks;
         }
+
+        function getCompletedTasks()
+        {
+//             $query = $GLOBALS['DB']->query("SELECT task_id FROM categories_tasks WHERE category_id = {$this->getId()};");
+//             $task_ids = $query->fetchAll(PDO::FETCH_ASSOC);
+// var_dump($task_ids);
+//             $tasks = array();
+//             foreach($task_ids as $id) {
+//                 $task_id = $id['task_id'];
+//                 $result = $GLOBALS['DB']->query("SELECT * FROM tasks WHERE completed = 1;");
+//                 $returned_task = $result->fetchAll(PDO::FETCH_ASSOC);
+//
+//                 $description = $returned_task[0]['description'];
+//                 $completed = $returned_task[0]['completed'];
+//                 $due_date = $returned_task[0]['due_date'];
+//                 $current_id = $returned_task[0]['id'];
+//                 $new_task = new Task($description, $completed, $due_date, $current_id);
+                $cat_tasks = $this->getTasks();
+                $tasks = array();
+                foreach ($cat_tasks as $new_task) {
+                    if ($new_task->getCompleted() == 1) {
+                        array_push($tasks, $new_task);
+                    }
+                }
+                return $tasks;
+            // }
+        }
     }
 ?>
